@@ -11,17 +11,17 @@ export function transformObject(originalObj: any): any {
       }
       return transformedObj;
     }
+  } else if (typeof originalObj === 'string') {
+    return transformString(originalObj);
   } else {
-    return originalObj;
+    return originalObj
   }
 }
 
 
 
-
 export function transformString(str: string) {
-
-  const parseStr = str.replace(/\s/g, "");
+  const parseStr = str?.replace(/\s/g, "");
 
   return parseStr.split("").sort((a, b) => {
     return b.charCodeAt(0) - a.charCodeAt(0)
