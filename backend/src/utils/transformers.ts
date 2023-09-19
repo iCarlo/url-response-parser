@@ -19,7 +19,7 @@ export function transformObject(originalObj: any): any {
 
 
 
-function transformString(str: string) {
+export function transformString(str: string) {
 
   const parseStr = str.replace(/\s/g, "");
 

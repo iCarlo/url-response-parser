@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap';
 
 export interface ResponseData {
-  raw: string|object, 
+  raw: string|object|null, 
   parsed: string|object|null,
 }
 
@@ -11,18 +11,29 @@ export interface ResponseData {
 }
 
 const ResponseView: React.FC<ResponseViewProps> = ({response}) => {
-  console.log(response);
+  
+
+  function stringifyResponse(str:string|object|null|undefined){
+    if(!str) {
+      return ""
+    } else  if(typeof str === 'object'){
+      return JSON.stringify(str, undefined, 4)
+    } else {
+      return str;
+    }
+  }
+
   return (
     <div>
       <Row>
         <Col>
           <h3>URL Response</h3>
-          <textarea className='w-100' rows={10} value={response?.raw ? JSON.stringify(response?.raw, undefined, 4) : ""} />
+          <textarea className='w-100' rows={10} value={stringifyResponse(response?.raw)} />
         </Col>
 
         <Col>
           <h3>Processed URL Response</h3>
-          <textarea className='w-100' rows={10} value={response?.parsed ? JSON.stringify(response?.parsed, undefined, 4) : ""} />
+          <textarea className='w-100' rows={10} value={stringifyResponse(response?.parsed)} />
         </Col>
       </Row>
     </div>

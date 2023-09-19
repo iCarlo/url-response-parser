@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { queryParser } from './service/parser_api';
 import ResponseView, { ResponseData } from './component/ResponseView';
 
 function App() {
   const [queryText, setQueryText] = useState({query: ""})
   const [response, setResponse] = useState<ResponseData|null>(null)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const persistedQuery = localStorage.getItem('appQueryText');
@@ -23,12 +24,14 @@ function App() {
 
   const onSubmit = async () => {
     try {
+      setIsLoading(true)
       const res = await queryParser(queryText);
       setResponse(res)
 
     } catch (err) {
       console.log(err);
     }
+    setIsLoading(false)
   }
 
   return (
@@ -39,7 +42,13 @@ function App() {
         <button onClick={onSubmit}>Query</button>
       </div>
 
-      <ResponseView response={response} />
+      {
+        isLoading 
+        ? <div className='d-flex justify-content-center'>
+          <Spinner variant='primary'/>
+        </div>
+        : <ResponseView response={response} />
+      }
     </Container>
   );
 }

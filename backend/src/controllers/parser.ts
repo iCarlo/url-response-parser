@@ -2,7 +2,7 @@ import { RequestHandler } from "express"
 // import createHttpError from "http-errors";
 import { isValidUrl } from "../utils/validateUrl";
 import { fetchData } from "../utils/fetchData";
-import { transformObject } from "../utils/transformObject";
+import { transformObject } from "../utils/transformers";
 
 interface QueryParserBody {
   query?: string;
